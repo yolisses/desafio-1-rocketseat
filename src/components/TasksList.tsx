@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { ItemWrapper } from './ItemWrapper';
 
 import trashIcon from '../assets/icons/trash/trash.png'
+import { TaskItem } from './TaskItem';
 
 export interface Task {
   id: number;
@@ -28,41 +29,11 @@ export function TasksList({ tasks, toggleTaskDone, removeTask }: TasksListProps)
       renderItem={({ item, index }) => {
         return (
           <ItemWrapper index={index}>
-            <View>
-              <TouchableOpacity
-                testID={`button-${index}`}
-                activeOpacity={0.7}
-                style={styles.taskButton}
-                onPress={() => toggleTaskDone(item.id)}
-              >
-                <View
-                  testID={`marker-${index}`}
-                  style={item.done ? styles.taskMarkerDone : styles.taskMarker}
-                >
-                  {item.done && (
-                    <Icon
-                      name="check"
-                      size={12}
-                      color="#FFF"
-                    />
-                  )}
-                </View>
-
-                <Text
-                  style={item.done ? styles.taskTextDone : styles.taskText}
-                >
-                  {item.title}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
-              testID={`trash-${index}`}
-              style={{ paddingHorizontal: 24 }}
-              onPress={() => removeTask(item.id)}
-            >
-              <Image source={trashIcon} />
-            </TouchableOpacity>
+            <TaskItem
+              index={index}
+              task={item}
+              toggleTaskDone={toggleTaskDone}
+              removeTask={removeTask} />
           </ItemWrapper>
         )
       }}
